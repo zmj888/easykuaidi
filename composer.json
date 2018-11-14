@@ -2,15 +2,15 @@
     "name": "cjl\/easykuaidi",
     "description": "A kaudi SDK.",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "cjl",
-            "email": "running727@163.com"
-        }
-    ],
+    "authors": [{
+        "name": "cjl",
+        "email": "running727@163.com"
+    }],
     "require": {
         "guzzlehttp/guzzle": "^6.3",
-        "mockery/mockery": "^1.2",
+        "mockery/mockery": "^1.2"
+    },
+    "require-dev": {
         "phpunit/phpunit": "~5"
     },
     "autoload": {
