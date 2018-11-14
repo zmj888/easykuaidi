@@ -11,8 +11,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::any('/easykuaidi/ztosubscribe', 'Cjl\Easykuaidi\Controller\EasykuaidiController@ztosubscribe')
+Route::any('/easykuaidi/ztosubscribe', 'Cjl\Easykuaidi\Controller\EasykuaidiController@ztoSubscribe')
     ->name('easykuaidi.ztosubscribe');
 
-Route::any('/easykuaidi/kuaidi100subscribe', 'Cjl\Easykuaidi\Controller\EasykuaidiController@kuaidi100subscribe')
+Route::any('/easykuaidi/kuaidi100subscribe', 'Cjl\Easykuaidi\Controller\EasykuaidiController@kuaidi100Subscribe')
     ->name('easykuaidi.kuaidi100subscribe');

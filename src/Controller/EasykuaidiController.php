@@ -34,7 +34,7 @@ class EasykuaidiController extends Controller
     /**
      * 快递100的订阅推送接口.
      */
-    public function kuaidi100subscribe(Request $request)
+    public function kuaidi100Subscribe(Request $request)
     {
         //这里处理好数据后 使用event发布事件
     }
