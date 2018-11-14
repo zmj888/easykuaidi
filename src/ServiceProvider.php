@@ -11,6 +11,9 @@
 
 namespace Cjl\Easykuaidi;
 
+use Laravel\Lumen\Application as LumenApplication;
+use Illuminate\Foundation\Application as LaravelApplication;
+
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     protected $defer = true;
