@@ -18,7 +18,11 @@ $ composer require cjl/easykuaidi -vvv
 
 ## Usage
 
-TODO
+时效价格查询
+```
+$this->app('easykuaidi')->getHourPrice('无锡市','江苏','杭州市','浙江');
+```
+
 
 ## Contributing
 
