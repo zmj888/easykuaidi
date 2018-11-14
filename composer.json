@@ -1,0 +1,21 @@
+{
+    "name": "cjl\/easykuaidi",
+    "description": "A kaudi SDK.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "cjl",
+            "email": "running727@163.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "phpunit/phpunit": "^7.4",
+        "mockery/mockery": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cjl\\Easykuaidi\\": "src"
+        }
+    }
+}
