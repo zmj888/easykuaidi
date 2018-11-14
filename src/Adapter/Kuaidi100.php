@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the cjl/easykuaidi.
+ *
+ * (c) cjl<running727@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Cjl\Easykuaidi\Adapter;
 
 use Cjl\Easykuaidi\Exceptions\NotSupportedException;
@@ -8,7 +17,7 @@ use Cjl\Easykuaidi\OrderInfo;
 class Kuaidi100 extends AbstractEasykuaidiAdapter
 {
     /**
-     * 快递100分配给贵司的的授权key，见授权key邮件说明
+     * 快递100分配给贵司的的授权key，见授权key邮件说明.
      */
     protected $key;
 
@@ -38,7 +47,7 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
         $this->key = $key;
     }
 
-    public function getHourPrice($dispCity,$dispProv,$sendCity,$sendProv)
+    public function getHourPrice($dispCity, $dispProv, $sendCity, $sendProv)
     {
         throw new NotSupportedException('kuaidi100不支持此接口');
     }
@@ -49,30 +58,30 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
      */
     public function getElecOrder(OrderInfo $orderInfo)
     {
-        $url = "http://api.kuaidi100.com/eorderapi.do?method=getElecOrder";
-        
+        $url = 'http://api.kuaidi100.com/eorderapi.do?method=getElecOrder';
+
         $sign = null;
-        $recMan = array("name"=>"张三","mobile"=>"13751866787","tel"=>"","zipCode"=>"","province"=>"广东省","city"=>"深圳市","district"=>"南山区","addr"=>"科技南十二路2号金蝶软件园B10","company"=>"");
-        $sendMan = array("name"=>"李四","mobile"=>"13751866787","tel"=>"","zipCode"=>"","province"=>"广东省","city"=>"深圳市","district"=>"南山区","addr"=>"高新南一道2号","company"=>"");
-        
-        $param = array("recMan"=>$recMan,"sendMan"=>$sendMan,"kuaidicom"=>"shunfeng",
-        "partnerId"=>"XXXXXXXXX","partnerKey"=>"","net"=>"","kuaidinum"=>"","orderId"=>"A2147",
-        "payType"=>"SHIPPER","expType"=>"标准快递","weight"=>"1","volumn"=>"0","count"=>1,"remark"=>"备注",
-        "valinsPay"=>"0","collection"=>"0","needChild"=>"0","needBack"=>"0","cargo"=>"书","needTemplate"=>"1");
+        $recMan = array('name' => '张三', 'mobile' => '13751866787', 'tel' => '', 'zipCode' => '', 'province' => '广东省', 'city' => '深圳市', 'district' => '南山区', 'addr' => '科技南十二路2号金蝶软件园B10', 'company' => '');
+        $sendMan = array('name' => '李四', 'mobile' => '13751866787', 'tel' => '', 'zipCode' => '', 'province' => '广东省', 'city' => '深圳市', 'district' => '南山区', 'addr' => '高新南一道2号', 'company' => '');
+
+        $param = array('recMan' => $recMan, 'sendMan' => $sendMan, 'kuaidicom' => 'shunfeng',
+        'partnerId' => 'XXXXXXXXX', 'partnerKey' => '', 'net' => '', 'kuaidinum' => '', 'orderId' => 'A2147',
+        'payType' => 'SHIPPER', 'expType' => '标准快递', 'weight' => '1', 'volumn' => '0', 'count' => 1, 'remark' => '备注',
+        'valinsPay' => '0', 'collection' => '0', 'needChild' => '0', 'needBack' => '0', 'cargo' => '书', 'needTemplate' => '1', );
 
         $query = array(
             'key' => $this->key,
             'sign' => $sign,
             't' => time(),
-            'param' =>  $param
+            'param' => $param,
         );
 
-        $response = $this->getHttpClient()->post($url,['query' => $query])->getBody()->getContents();
+        $response = $this->getHttpClient()->post($url, ['query' => $query])->getBody()->getContents();
 
         return \json_decode($response, true);
     }
 
-    public function subBillLog(array $danhaos,string $ssl='')
+    public function subBillLog(array $danhaos, string $ssl = '')
     {
         throw new Exception('此接口尚未实现');
     }

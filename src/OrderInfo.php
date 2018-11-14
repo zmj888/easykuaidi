@@ -1,103 +1,95 @@
 <?php
 
+/*
+ * This file is part of the cjl/easykuaidi.
+ *
+ * (c) cjl<running727@163.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Cjl\Easykuaidi;
 
-class OrderInfo 
+class OrderInfo
 {
     /**
-     * 订单号
-     *
+     * 订单号.
      */
     public $orderid;
 
     /**
-     * 交易号
-     *
+     * 交易号.
      */
-    public $tradeid='';
+    public $tradeid = '';
 
     /**
-     * ContactInfo 发件人
-     *
+     * ContactInfo 发件人.
      */
     public $sender;
 
     /**
-     * ContactInfo 收件人
-     *
+     * ContactInfo 收件人.
      */
     public $receiver;
 
     /**
-     * 重量，单位：千克
-     *
+     * 重量，单位：千克.
      */
-    public $weight='';
+    public $weight = '';
 
     /**
-     * 订单包裹大小（厘米）, 用半角的逗号来分隔长宽高	12,23,11
-     *
+     * 订单包裹大小（厘米）, 用半角的逗号来分隔长宽高	12,23,11.
      */
-    public $size='';
+    public $size = '';
 
     /**
-     * 订单包裹内货物总数量
-     *
+     * 订单包裹内货物总数量.
      */
-    public $quantity='';
+    public $quantity = '';
 
     /**
-     * 订单备注
-     *
+     * 订单备注.
      */
-    public $remark='';
-    
+    public $remark = '';
+
     /**
      * 订单包裹中商品总价值
-     *
      */
-    public $price='';
+    public $price = '';
 
     /**
-     * 运输费
-     *
+     * 运输费.
      */
-    public $freight='';
+    public $freight = '';
 
     /**
-     * 保险费
-     *
+     * 保险费.
      */
-    public $premium='';
+    public $premium = '';
 
     /**
-     * 包装费
-     *
+     * 包装费.
      */
-    public $pack_charges='';
- 
-    /**
-     * 其他费用
-     *
-     */
-    public $other_charges='';
+    public $pack_charges = '';
 
     /**
-     * 订单总金额
-     *
+     * 其他费用.
      */
-    public $order_sum='';
+    public $other_charges = '';
 
     /**
-     * 到达收取金额，一般代收货款或者到付件才需指定
-     *
+     * 订单总金额.
      */
-    public $collect_sum='';
+    public $order_sum = '';
 
     /**
-     * 订单类型：0标准；1代收；2到付
-     *
+     * 到达收取金额，一般代收货款或者到付件才需指定.
      */
-    public $order_type=0;
+    public $collect_sum = '';
 
+    /**
+     * 订单类型：0标准；1代收；2到付.
+     */
+    public $order_type = 0;
 }
