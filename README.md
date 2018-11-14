@@ -4,6 +4,7 @@
 
 
 [![Build Status](https://travis-ci.org/zmj888/easykuaidi.svg?branch=master)](https://travis-ci.org/zmj888/easykuaidi)
+[![StyleCI](https://github.styleci.io/repos/157537267/shield?branch=master)](https://github.styleci.io/repos/157537267)
 
 
 ## 说明
