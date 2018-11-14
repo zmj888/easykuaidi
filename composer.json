@@ -7,10 +7,11 @@
         "email": "running727@163.com"
     }],
     "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "mockery/mockery": "^1.2"
+        "guzzlehttp/guzzle": "^6.3"
+
     },
     "require-dev": {
+        "mockery/mockery": "^1.2",
         "phpunit/phpunit": "~5"
     },
     "autoload": {
