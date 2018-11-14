@@ -31,7 +31,6 @@ class Easykuaidi implements EasykuaidiAdapterinterface
      */
     public function __construct($config)
     {
-        $this->adapter = $adapter;
         $this->config = $config;
         if ('zto' == $config['default']) {
             $this->adapter = new ZTOAdapter($config['zto']['company_id'],$config['zto']['key'],
