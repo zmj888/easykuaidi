@@ -11,12 +11,12 @@ use GuzzleHttp\ClientInterface;
 
 class ZTOAdapterTest extends TestCase
 {
-    public function testGetHourPriceWithInvalidConstrctArguments()
-    {
-        $adapter = new ZTOAdapter("","");
-        // 断言会抛出此异常类
-        $this->expectException(InvalidArgumentException::class);
-    }
+    // public function testGetHourPriceWithInvalidConstrctArguments()
+    // {
+    //     $adapter = new ZTOAdapter("","");
+    //     // 断言会抛出此异常类
+    //     $this->expectException(InvalidArgumentException::class);
+    // }
 
     public function testGetHourPrice()
     {
@@ -25,34 +25,34 @@ class ZTOAdapterTest extends TestCase
           $this->assertSame(['data'=>["addMoney"=>"2","firstMoney"=>"10","hour"=>"0"],"msg"=>"获取报价成功","status"=>true], $adapter->getHourPrice('无锡市','江苏','杭州市','浙江'));
     }
 
-    public function testGetElecOrder()
-    {
-        $adapter = new ZTOAdapter("asd","asd",true,'test','test');
+    // public function testGetElecOrder()
+    // {
+    //     $adapter = new ZTOAdapter("asd","asd",true,'test','test');
 
-        $sender = new ContactInfo();
-        $sender->name = "站三";
-        $sender->mobile = "13323233232";
-        $sender->province = "江苏";
-        $sender->city = "南通";
-        $sender->country = "通州区";
-        $sender->address = "冠华路900号";
+    //     $sender = new ContactInfo();
+    //     $sender->name = "站三";
+    //     $sender->mobile = "13323233232";
+    //     $sender->province = "江苏";
+    //     $sender->city = "南通";
+    //     $sender->country = "通州区";
+    //     $sender->address = "冠华路900号";
 
-        $receiver = new ContactInfo();
-        $receiver->name = "lisi";
-        $receiver->mobile = "13323233232";
-        $receiver->province = "江苏";
-        $receiver->city = "南京";
-        $receiver->country = "玄武区";
-        $receiver->address = "中华路100号";
+    //     $receiver = new ContactInfo();
+    //     $receiver->name = "lisi";
+    //     $receiver->mobile = "13323233232";
+    //     $receiver->province = "江苏";
+    //     $receiver->city = "南京";
+    //     $receiver->country = "玄武区";
+    //     $receiver->address = "中华路100号";
 
-        $orderInfo = new OrderInfo();
-        $orderInfo->sender = $sender;
-        $orderInfo->receiver = $receiver;
-        $orderInfo->orderid = "xfs101100111011";
+    //     $orderInfo = new OrderInfo();
+    //     $orderInfo->sender = $sender;
+    //     $orderInfo->receiver = $receiver;
+    //     $orderInfo->orderid = "xfs101100111011";
  
-        $this->assertSame(['data'=>["billCode"=>"73100616669307","message"=>'单号获取成功',"orderId"=>'xfs101100111011',"siteCode"=>'02100',"siteName"=>'上海',"update"=>true],'message'=>'TRUE','result' => true], 
-            $adapter->getElecOrder($orderInfo));
-    }
+    //     $this->assertSame(['data'=>["billCode"=>"73100616669307","message"=>'单号获取成功',"orderId"=>'xfs101100111011',"siteCode"=>'02100',"siteName"=>'上海',"update"=>true],'message'=>'TRUE','result' => true], 
+    //         $adapter->getElecOrder($orderInfo));
+    // }
 
     public function testSubBillLog()
     {
