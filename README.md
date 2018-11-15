@@ -48,7 +48,12 @@ $this->app('easykuaidi')->subBillLog(['680000000021'], 'test')
 Cjl\Easykuaidi\Events\EasykuaidiEvent
 ```
 
-
+在EventServiceProvider里注册订阅者类，比如
+```
+    protected $subscribe = [
+        'App\Listeners\EasykuaidiSubscriber',
+    ];
+```
 
 - 电子面单
 ```

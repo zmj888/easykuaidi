@@ -11,8 +11,11 @@
 
 namespace Cjl\Easykuaidi\Controller;
 
+use Cjl\Easykuaidi\Events\EasykuaidiEvent;
+use Cjl\Easykuaidi\GuijiData;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EasykuaidiController extends Controller
 {
@@ -29,6 +32,12 @@ class EasykuaidiController extends Controller
         // company_id: test
 
         // msg_type: Traces
+        Log::info('ztoSubscribe');
+        //throw new \Exception('ztoSubscribe');
+        $guijiData = new GuijiData();
+        $guijiData->rawData = $request->data;
+        $guijiData->kuaidicom = "zto";
+        event(new EasykuaidiEvent($guijiData));
     }
 
     /**
