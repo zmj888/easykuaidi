@@ -16,7 +16,6 @@ use Illuminate\Foundation\Application as LaravelApplication;
 
 class EasykuaidiServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-
     /**
      * Boot the provider.
      */
