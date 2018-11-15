@@ -36,7 +36,7 @@ class EasykuaidiController extends Controller
         //throw new \Exception('ztoSubscribe');
         $guijiData = new GuijiData();
         $guijiData->rawData = $request->data;
-        $guijiData->kuaidicom = "zto";
+        $guijiData->kuaidicom = 'zto';
         event(new EasykuaidiEvent($guijiData));
     }
 
