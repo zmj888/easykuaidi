@@ -62,7 +62,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv): ResponseData
     {
         return $this->adapter->getHourPrice($dispCity, $dispProv, $sendCity, $sendProv);
     }
@@ -74,7 +74,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function getElecOrder(OrderInfo $orderInfo):ResponseData
+    public function getElecOrder(OrderInfo $orderInfo): ResponseData
     {
         return $this->adapter->getElecOrder($orderInfo);
     }
@@ -87,19 +87,19 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData
+    public function subBillLog(array $danhaos, string $ssl = ''): ResponseData
     {
         return $this->adapter->subBillLog($danhaos, $ssl);
     }
-	
+
     /**
      * 获取快件轨迹信息.
      *
-     * @param array  $danhaos 商家要查询的的订单号数组
+     * @param array $danhaos 商家要查询的的订单号数组
      *
      * @return string json格式的
      */
-    public function traceInterfaceNewTraces(array $danhaos):ResponseData
+    public function traceInterfaceNewTraces(array $danhaos): ResponseData
     {
         return $this->adapter->traceInterfaceNewTraces($danhaos);
     }

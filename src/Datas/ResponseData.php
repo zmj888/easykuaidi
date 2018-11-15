@@ -19,12 +19,12 @@ class ResponseData
     public $status;
 
     /**
-     * 信息
+     * 信息.
      */
     public $message;
 
     /**
-     * 快递接口返回的原始数据
+     * 快递接口返回的原始数据.
      */
     public $rawData;
 }

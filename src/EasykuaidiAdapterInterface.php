@@ -26,7 +26,7 @@ interface EasykuaidiAdapterInterface
      *
      * @return ResponseData
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData;
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv): ResponseData;
 
     /**
      * 获取电子面单.
@@ -35,7 +35,7 @@ interface EasykuaidiAdapterInterface
      *
      * @return ResponseData
      */
-    public function getElecOrder(OrderInfo $orderInfo):ResponseData;
+    public function getElecOrder(OrderInfo $orderInfo): ResponseData;
 
     /**
      * 订阅订单轨迹.
@@ -45,15 +45,14 @@ interface EasykuaidiAdapterInterface
      *
      * @return ResponseData
      */
-    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData;
-	
+    public function subBillLog(array $danhaos, string $ssl = ''): ResponseData;
+
     /**
      * 获取快件轨迹信息.
      *
-     * @param array  $danhaos 商家要查询的的订单号数组
+     * @param array $danhaos 商家要查询的的订单号数组
      *
      * @return ResponseData
      */
-    public function traceInterfaceNewTraces(array $danhaos):ResponseData;
-	
+    public function traceInterfaceNewTraces(array $danhaos): ResponseData;
 }
