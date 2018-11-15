@@ -14,7 +14,7 @@ namespace Cjl\Easykuaidi;
 class GuijiData
 {
     /**
-     * 原始数据
+     * 原始数据.
      */
     public $rawData;
 

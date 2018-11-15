@@ -36,6 +36,7 @@ class EasykuaidiController extends Controller
 
         $guijiData = new GuijiData();
         $guijiData->rawData = $request->data;
+
         $guijiData->kuaidicom = "zto";
 		
         if (!empty($request->data)) {
@@ -56,10 +57,11 @@ class EasykuaidiController extends Controller
 			$guijiData->remark6 = $data['remark6'];
 		}
 		
-		
+	
         event(new EasykuaidiEvent($guijiData));
-		
-		$resp = array('message'=>'','result'=>'success','status'=>true,'statusCode'=>'0');
+
+        $resp = array('message' => '', 'result' => 'success', 'status' => true, 'statusCode' => '0');
+
         return json_encode($resp);
     }
 
