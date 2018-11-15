@@ -13,6 +13,8 @@ namespace Cjl\Easykuaidi;
 
 use Cjl\Easykuaidi\Adapter\ZTOAdapter;
 use Cjl\Easykuaidi\Adapter\Kuaidi100;
+use Cjl\Easykuaidi\Datas\OrderInfo;
+use Cjl\Easykuaidi\Datas\ResponseData;
 
 class Easykuaidi implements EasykuaidiAdapterInterface
 {
@@ -60,7 +62,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv)
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData
     {
         return $this->adapter->getHourPrice($dispCity, $dispProv, $sendCity, $sendProv);
     }
@@ -72,7 +74,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function getElecOrder(OrderInfo $orderInfo)
+    public function getElecOrder(OrderInfo $orderInfo):ResponseData
     {
         return $this->adapter->getElecOrder($orderInfo);
     }
@@ -85,7 +87,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function subBillLog(array $danhaos, string $ssl = '')
+    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData
     {
         return $this->adapter->subBillLog($danhaos, $ssl);
     }
@@ -97,7 +99,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function traceInterfaceNewTraces(array $danhaos)
+    public function traceInterfaceNewTraces(array $danhaos):ResponseData
     {
         return $this->adapter->traceInterfaceNewTraces($danhaos);
     }
