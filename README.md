@@ -5,7 +5,10 @@
 
 [![Build Status](https://travis-ci.org/zmj888/easykuaidi.svg?branch=master)](https://travis-ci.org/zmj888/easykuaidi)
 [![StyleCI](https://github.styleci.io/repos/157537267/shield?branch=master)](https://github.styleci.io/repos/157537267)
-
+[![Latest Stable Version](https://poser.pugx.org/cjl/easykuaidi/v/stable)](https://packagist.org/packages/cjl/easykuaidi)
+[![Total Downloads](https://poser.pugx.org/cjl/easykuaidi/downloads)](https://packagist.org/packages/cjl/easykuaidi)
+[![Latest Unstable Version](https://poser.pugx.org/cjl/easykuaidi/v/unstable)](https://packagist.org/packages/cjl/easykuaidi)
+[![License](https://poser.pugx.org/cjl/easykuaidi/license)](https://packagist.org/packages/cjl/easykuaidi)
 
 ## 说明
 实现对接多加快递平台的电子面单、价格查询、订阅轨迹等接口。 初步实现三家：中通、圆通、顺风 另外作为补充，也对接快递100的接口
