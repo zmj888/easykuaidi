@@ -19,22 +19,22 @@ class ElecOrderData extends ResponseData
     public $billCode;
 
     /**
-     * 订单号
+     * 订单号.
      */
     public $orderId;
 
     /**
-     * 是否更新
+     * 是否更新.
      */
     public $update;
 
     /**
-     * 	网点编号
+     * 	网点编号.
      */
     public $siteCode;
 
     /**
-     * 网点名称
+     * 网点名称.
      */
     public $siteName;
 }

@@ -82,7 +82,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *                "status": true
      *                }
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv): ResponseData
     {
         if (empty($dispCity) || empty($dispProv) || empty($sendCity) || empty($sendProv)) {
             throw new InvalidArgumentException('无效的参数');
@@ -148,6 +148,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->addMoney = $res['data']['addMoney'];
             $resData->firstMoney = $res['data']['firstMoney'];
             $resData->hour = $res['data']['hour'];
+
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
@@ -162,7 +163,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *
      * @return string json格式的
      */
-    public function getElecOrder(OrderInfo $orderInfo):ResponseData
+    public function getElecOrder(OrderInfo $orderInfo): ResponseData
     {
         $jiekouname = 'partnerInsertSubmitagent';
 
@@ -234,6 +235,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->update = $res['data']['update'];
             $resData->siteCode = $res['data']['siteCode'];
             $resData->siteName = $res['data']['siteName'];
+
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
@@ -248,7 +250,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *
      * @return string json格式的
      */
-    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData
+    public function subBillLog(array $danhaos, string $ssl = ''): ResponseData
     {
         $jiekouname = 'subBillLog';
 
@@ -323,21 +325,22 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData = new ResponseData();
             $resData->status = true;
             $resData->rawData = $res;
-            $resData->message = "订阅成功";
+            $resData->message = '订阅成功';
+
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
-	
+
     /**
      * 获取快件轨迹信息.
      *
-     * @param array  $danhaos 商家要查询的的订单号数组
+     * @param array $danhaos 商家要查询的的订单号数组
      *
      * @return string json格式的
      */
-    public function traceInterfaceNewTraces(array $danhaos):ResponseData
+    public function traceInterfaceNewTraces(array $danhaos): ResponseData
     {
         $jiekouname = 'traceInterfaceNewTraces';
 
@@ -410,8 +413,8 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->message = $res['msg'];
             $resData->billCode = $res['data']['billCode'];
             $datas = [];
-            $dArr = json_decode($res['data']['traces'],true);
-            foreach ($dArr as $item){
+            $dArr = json_decode($res['data']['traces'], true);
+            foreach ($dArr as $item) {
                 $gdata = new GuijiData();
                 $gdata->rawData = $item;
                 $gdata->desc = $item['desc'];
@@ -437,6 +440,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
                 $datas[] = $gdata;
             }
             $resData->traceDatas = $datas;
+
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);

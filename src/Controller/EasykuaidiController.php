@@ -40,7 +40,7 @@ class EasykuaidiController extends Controller
         $guijiData->status = false;
         if (!empty($request->data)) {
             $guijiData->status = true;
-            $data = json_decode($request->data,true);
+            $data = json_decode($request->data, true);
             $guijiData->billCode = $data['billCode'];
             $guijiData->contacts = $data['contacts'];
             $guijiData->contactsTel = $data['contactsTel'];
