@@ -65,7 +65,7 @@ class ZTOAdapterTest extends TestCase
 
     public function testSubBillLog()
     {
-        $adapter = new ZTOAdapter('asd', 'asd', true, 'test', 'test', 'http://requestbin.leo108.com/174je361');
+        $adapter = new ZTOAdapter('asd', 'asd', true, 'test', 'test', 'http://requestbin.leo108.com/12geg3l1');
         $this->assertSame([['id' => '1111111111', 'mailNo' => '', 'remark' => '订阅成功', 'status' => true]], $adapter->subBillLog(['680000000020'], 'test'));
     }
 
