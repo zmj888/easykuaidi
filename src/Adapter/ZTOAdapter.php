@@ -307,11 +307,11 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
-	
+
     /**
      * 获取快件轨迹信息.
      *
-     * @param array  $danhaos 商家要查询的的订单号数组
+     * @param array $danhaos 商家要查询的的订单号数组
      *
      * @return string json格式的
      */

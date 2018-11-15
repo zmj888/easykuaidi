@@ -85,7 +85,7 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
     {
         throw new Exception('此接口尚未实现');
     }
-	
+
     public function traceInterfaceNewTraces(array $danhaos)
     {
         throw new Exception('此接口尚未实现');
