@@ -11,6 +11,8 @@
 
 namespace Cjl\Easykuaidi;
 
+use Cjl\Easykuaidi\Datas\OrderInfo;
+
 interface EasykuaidiAdapterInterface
 {
     /**
@@ -43,4 +45,13 @@ interface EasykuaidiAdapterInterface
      * @return string json格式的
      */
     public function subBillLog(array $danhaos, string $ssl = '');
+	
+    /**
+     * 获取快件轨迹信息.
+     *
+     * @param array  $danhaos 商家要查询的的订单号数组
+     *
+     * @return string json格式的
+     */
+    public function traceInterfaceNewTraces(array $danhaos);
 }

@@ -12,7 +12,7 @@
 namespace Cjl\Easykuaidi\Adapter;
 
 use Cjl\Easykuaidi\Exceptions\NotSupportedException;
-use Cjl\Easykuaidi\OrderInfo;
+use Cjl\Easykuaidi\Datas\OrderInfo;
 
 class Kuaidi100 extends AbstractEasykuaidiAdapter
 {
@@ -47,7 +47,7 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
         $this->key = $key;
     }
 
-    public function getHourPrice($dispCity, $dispProv, $sendCity, $sendProv)
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv)
     {
         throw new NotSupportedException('kuaidi100不支持此接口');
     }
@@ -82,6 +82,11 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
     }
 
     public function subBillLog(array $danhaos, string $ssl = '')
+    {
+        throw new Exception('此接口尚未实现');
+    }
+	
+    public function traceInterfaceNewTraces(array $danhaos)
     {
         throw new Exception('此接口尚未实现');
     }

@@ -12,7 +12,7 @@
 namespace Cjl\Easykuaidi\Controller;
 
 use Cjl\Easykuaidi\Events\EasykuaidiEvent;
-use Cjl\Easykuaidi\GuijiData;
+use Cjl\Easykuaidi\Datas\GuijiData;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

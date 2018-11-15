@@ -89,4 +89,16 @@ class Easykuaidi implements EasykuaidiAdapterInterface
     {
         return $this->adapter->subBillLog($danhaos, $ssl);
     }
+	
+    /**
+     * 获取快件轨迹信息.
+     *
+     * @param array  $danhaos 商家要查询的的订单号数组
+     *
+     * @return string json格式的
+     */
+    public function traceInterfaceNewTraces(array $danhaos)
+    {
+        return $this->adapter->traceInterfaceNewTraces($danhaos);
+    }
 }

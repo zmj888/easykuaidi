@@ -11,7 +11,7 @@
 
 namespace Cjl\Easykuaidi\Adapter;
 
-use Cjl\Easykuaidi\OrderInfo;
+use Cjl\Easykuaidi\Datas\OrderInfo;
 use Cjl\Easykuaidi\Exceptions\HttpException;
 use Cjl\Easykuaidi\Exceptions\InvalidArgumentException;
 
@@ -255,6 +255,87 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         }
 
         $params = array('company_id' => $comid, 'msg_type' => 'SUB', 'data' => $data);
+        $fixedParams = array();
+        foreach ($params as $k => $v) {
+            if ('string' != gettype($v)) {
+                $fixedParams += [$k => json_encode($v)];
+            } else {
+                $fixedParams += [$k => $v];
+            }
+        }
+        $str_to_digest = '';
+        foreach ($fixedParams as $k => $v) {
+            $str_to_digest = $str_to_digest.$k.'='.$v.'&';
+        }
+        $str_to_digest = substr($str_to_digest, 0, -1).$comkey;
+        $data_digest = base64_encode(md5($str_to_digest, true));
+
+        try {
+            $response = $this->getHttpClient()->post($url, [
+                'form_params' => $fixedParams,
+                'headers' => [
+                    'ContentType' => 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'x-companyId' => $comid,
+                    'x-dataDigest' => $data_digest,
+                ],
+            ])->getBody()->getContents();
+
+            $res = \json_decode($response, true);
+
+            if (isset($res[0]['status']) && !$res[0]['status']) {
+                throw new InvalidArgumentException($res[0]['remark']);
+            }
+            if (isset($res['status']) && !$res['status']) {
+                if (isset($res['remark'])) {
+                    throw new InvalidArgumentException($res['remark']);
+                } elseif (isset($res['message'])) {
+                    throw new InvalidArgumentException($res['message']);
+                } else {
+                    throw new InvalidArgumentException($res['msg']);
+                }
+            }
+            if (isset($res['result']) && !$res['result']) {
+                if (isset($res['message'])) {
+                    throw new InvalidArgumentException($res['message']);
+                } else {
+                    throw new InvalidArgumentException($res['msg']);
+                }
+            }
+
+            return $res;
+        } catch (\Exception $e) {
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+	
+    /**
+     * 获取快件轨迹信息.
+     *
+     * @param array  $danhaos 商家要查询的的订单号数组
+     *
+     * @return string json格式的
+     */
+    public function traceInterfaceNewTraces(array $danhaos)
+    {
+        $jiekouname = 'traceInterfaceNewTraces';
+
+        $data = [];
+        if ($this->testmode) {
+            $url = $this->host_test.$jiekouname;
+            $comid = 'kfpttestCode';
+            $comkey = 'kfpttestkey==';
+        } else {
+            $comid = $this->company_id;
+            $comkey = $this->key;
+            $url = $this->host.$jiekouname;
+        }
+        $testid = '1111111111';
+
+        foreach ($danhaos as $danhao) {
+            $data[] = $danhao;
+        }
+
+        $params = array('company_id' => $comid, 'msg_type' => 'NEW_TRACES', 'data' => $data);
         $fixedParams = array();
         foreach ($params as $k => $v) {
             if ('string' != gettype($v)) {

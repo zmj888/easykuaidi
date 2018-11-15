@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Cjl\Easykuaidi;
+namespace Cjl\Easykuaidi\Datas;
 
 class ContactInfo
 {

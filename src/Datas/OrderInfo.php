@@ -9,20 +9,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Cjl\Easykuaidi;
+namespace Cjl\Easykuaidi\Datas;
 
-class GuijiData
+class OrderInfo
 {
-    /**
-     * 原始数据.
-     */
-    public $rawData;
-
-    /**
-     * 快递公司，如中通：zto.
-     */
-    public $kuaidicom;
-
     /**
      * 订单号.
      */
