@@ -34,12 +34,12 @@ return [
         /*
         * 商家ID，又称电子面单账号、电子面单账户、客户ID(正式环境由中通合作网点提供，测试环境使用test)
         */
-        'partner_id' => '',
+        'partner_id' => 'test',
 
         /*
         * 订阅人（ 测试环境统一为：test，生产环境在联调通过后分配。）
         */
-        'create_by' => '',
+        'create_by' => 'test',
     ],
 
     /*

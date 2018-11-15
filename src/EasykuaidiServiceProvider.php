@@ -14,7 +14,7 @@ namespace Cjl\Easykuaidi;
 use Laravel\Lumen\Application as LumenApplication;
 use Illuminate\Foundation\Application as LaravelApplication;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class EasykuaidiServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     protected $defer = true;
 
@@ -23,7 +23,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        
     }
 
     /**
@@ -32,7 +32,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function setupConfig()
     {
         $source = realpath(__DIR__.'/config.php');
-
+		$this->loadRoutesFrom(__DIR__.'/routes.php');
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('easykuaidi.php')], 'easykuaidi');
         } elseif ($this->app instanceof LumenApplication) {

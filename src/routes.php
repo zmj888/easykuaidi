@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-use Illuminate\Support\Facades\Route;
+
 
 Route::any('/easykuaidi/ztosubscribe', 'Cjl\Easykuaidi\Controller\EasykuaidiController@ztoSubscribe')
     ->name('easykuaidi.ztosubscribe');

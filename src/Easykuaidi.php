@@ -14,7 +14,7 @@ namespace Cjl\Easykuaidi;
 use Cjl\Easykuaidi\Adapter\ZTOAdapter;
 use Cjl\Easykuaidi\Adapter\Kuaidi100;
 
-class Easykuaidi implements EasykuaidiAdapterinterface
+class Easykuaidi implements EasykuaidiAdapterInterface
 {
     /**
      * @var AbstractEasykuaidiAdapter
@@ -34,7 +34,7 @@ class Easykuaidi implements EasykuaidiAdapterinterface
         $this->config = $config;
         if ('zto' == $config['default']) {
             $this->adapter = new ZTOAdapter($config['zto']['company_id'],$config['zto']['key'],
-            $config['testmode'], $config['zto']['partner_id'], $config['zto']['create_by'], url('easykuaidi.ztosubscribe'));
+            $config['testmode'], $config['zto']['partner_id'], $config['zto']['create_by'], url('/easykuaidi/ztosubscribe'));
         } elseif ('kuaidi100' == $config['default']) {
             $this->adapter = new Kuaidi100($config['kuaidi100']['key']);
         }
