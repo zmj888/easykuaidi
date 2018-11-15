@@ -49,7 +49,7 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
         $this->key = $key;
     }
 
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv): ResponseData
     {
         throw new NotSupportedException('kuaidi100不支持此接口');
     }
@@ -58,7 +58,7 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
      * 将订单信息通过本接口提交给快递100，快递100将之提交给快递公司并返回快递公司生成的电子面单号码和打印模版，
      * 再获得该电子面单号码和打印模版后，即可将之通过打印机打印出来，打印完成后即可贴到包裹上，快递员可以直接揽件。
      */
-    public function getElecOrder(OrderInfo $orderInfo):ResponseData
+    public function getElecOrder(OrderInfo $orderInfo): ResponseData
     {
         throw new Exception('此接口尚未实现');
 //        $url = 'http://api.kuaidi100.com/eorderapi.do?method=getElecOrder';
@@ -84,19 +84,19 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
 //        return \json_decode($response, true);
     }
 
-    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData
+    public function subBillLog(array $danhaos, string $ssl = ''): ResponseData
     {
         throw new Exception('此接口尚未实现');
     }
-	
+
     /**
      * 获取快件轨迹信息.
      *
-     * @param array  $danhaos 商家要查询的的订单号数组
+     * @param array $danhaos 商家要查询的的订单号数组
      *
      * @return string json格式的
      */
-    public function traceInterfaceNewTraces(array $danhaos):ResponseData
+    public function traceInterfaceNewTraces(array $danhaos): ResponseData
     {
         throw new Exception('此接口尚未实现');
     }

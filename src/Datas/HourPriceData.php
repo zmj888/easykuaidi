@@ -19,12 +19,12 @@ class HourPriceData extends ResponseData
     public $addMoney;
 
     /**
-     * 首重费用
+     * 首重费用.
      */
     public $firstMoney;
 
     /**
-     * 时效
+     * 时效.
      */
     public $hour;
 }
