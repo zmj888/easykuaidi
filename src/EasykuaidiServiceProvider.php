@@ -23,7 +23,6 @@ class EasykuaidiServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        
     }
 
     /**
@@ -32,7 +31,7 @@ class EasykuaidiServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function setupConfig()
     {
         $source = realpath(__DIR__.'/config.php');
-		$this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('easykuaidi.php')], 'easykuaidi');
         } elseif ($this->app instanceof LumenApplication) {
