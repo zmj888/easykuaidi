@@ -33,11 +33,34 @@ class EasykuaidiController extends Controller
 
         // msg_type: Traces
         Log::info('ztoSubscribe');
-        //throw new \Exception('ztoSubscribe');
+
         $guijiData = new GuijiData();
         $guijiData->rawData = $request->data;
         $guijiData->kuaidicom = "zto";
+		
+		$data = $request->data;
+		if(!empty($data)){
+			$guijiData->billCode = $data['billCode'];
+			$guijiData->contacts = $data['contacts'];
+			$guijiData->contactsTel = $data['contactsTel'];
+			$guijiData->desc = $data['desc'];
+			$guijiData->scanType = $data['scanType'];
+			$guijiData->scanSite = $data['scanSite'];
+			$guijiData->scanCity = $data['scanCity'];
+			$guijiData->scanDate = $data['scanDate'];
+			$guijiData->remark1 = $data['remark1'];
+			$guijiData->remark2 = $data['remark2'];
+			$guijiData->remark3 = $data['remark3'];
+			$guijiData->remark4 = $data['remark4'];
+			$guijiData->remark5 = $data['remark5'];
+			$guijiData->remark6 = $data['remark6'];
+		}
+		
+		
         event(new EasykuaidiEvent($guijiData));
+		
+		$resp = array('message'=>'','result'=>'success','status'=>true,'statusCode'=>'0');
+        return json_encode($resp);
     }
 
     /**
