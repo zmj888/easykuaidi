@@ -13,18 +13,83 @@
 ## 说明
 实现对接多加快递平台的电子面单、价格查询、订阅轨迹等接口。 初步实现三家：中通、圆通、顺风 另外作为补充，也对接快递100的接口
 
-## Installing
+## 安装
 
-```shell
-$ composer require cjl/easykuaidi -vvv
+```
+$ composer require cjl/easykuaidi
 ```
 
-## Usage
+Add the service provider to config/app.php in the providers array. If you're using Laravel 5.5 or greater, there's no need to do this.
 
-时效价格查询
+```
+Cjl\Easykuaidi\EasykuaidiServiceProvider::class
+```
+## 配置
+
+```
+$ php artisan vendor:publish --provider="Cjl\Easykuaidi\EasykuaidiServiceProvider"
+```
+
+
+## 使用
+
+- 时效价格查询
 ```
 $this->app('easykuaidi')->getHourPrice('无锡市','江苏','杭州市','浙江');
 ```
+
+
+- 订阅快递轨迹
+```
+$this->app('easykuaidi')->subBillLog(['680000000021'], 'test')
+```
+在App/Listeners下面新建一个注册事件订阅者，订阅事件
+```
+Cjl\Easykuaidi\Events\EasykuaidiEvent
+```
+
+
+
+- 电子面单
+```
+	$sender = new \Cjl\Easykuaidi\ContactInfo();
+    
+    $sender->name = "站三";
+    
+    $sender->mobile = "13323233232";
+    
+    $sender->province = "江苏";
+    
+    $sender->city = "南通";
+    
+    $sender->country = "通州区";
+    
+    $sender->address = "冠华路900号";
+    
+    $receiver = new \Cjl\Easykuaidi\ContactInfo();
+    
+    $receiver->name = "lisi";
+    
+    $receiver->mobile = "13323233232";
+    
+    $receiver->province = "江苏";
+    
+    $receiver->city = "南京";
+    
+    $receiver->country = "玄武区";
+    
+    $receiver->address = "中华路100号";
+    
+    $orderInfo = new \Cjl\Easykuaidi\OrderInfo();
+    
+    $orderInfo->sender = $sender;
+    
+    $orderInfo->receiver = $receiver;
+    
+    $orderInfo->orderid = "xfs101100111011";
+    
+	$this->app('easykuaidi')->getElecOrder($orderInfo);
+ ```
 
 
 ## Contributing
