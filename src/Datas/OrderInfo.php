@@ -11,7 +11,7 @@
 
 namespace Cjl\Easykuaidi\Datas;
 
-class OrderInfo
+class OrderInfo extends ResponseData
 {
     /**
      * 订单号.

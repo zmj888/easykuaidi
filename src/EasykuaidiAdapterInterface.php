@@ -12,6 +12,7 @@
 namespace Cjl\Easykuaidi;
 
 use Cjl\Easykuaidi\Datas\OrderInfo;
+use Cjl\Easykuaidi\Datas\ResponseData;
 
 interface EasykuaidiAdapterInterface
 {
@@ -23,18 +24,18 @@ interface EasykuaidiAdapterInterface
      * @param string $sendCity 寄件城市名称，如 杭州市
      * @param string $sendProv 寄件省份名称，如 浙江
      *
-     * @return string json格式的
+     * @return ResponseData
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv);
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData;
 
     /**
      * 获取电子面单.
      *
      * @param OrderInfo $orderInfo 订单信息
      *
-     * @return string json格式的
+     * @return ResponseData
      */
-    public function getElecOrder(OrderInfo $orderInfo);
+    public function getElecOrder(OrderInfo $orderInfo):ResponseData;
 
     /**
      * 订阅订单轨迹.
@@ -42,16 +43,17 @@ interface EasykuaidiAdapterInterface
      * @param array  $danhaos 商家要追踪的的订单号数组
      * @param string $ssl     如果回调地址为HTTPS ，入参 ssl=1 且必填
      *
-     * @return string json格式的
+     * @return ResponseData
      */
-    public function subBillLog(array $danhaos, string $ssl = '');
+    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData;
 	
     /**
      * 获取快件轨迹信息.
      *
      * @param array  $danhaos 商家要查询的的订单号数组
      *
-     * @return string json格式的
+     * @return ResponseData
      */
-    public function traceInterfaceNewTraces(array $danhaos);
+    public function traceInterfaceNewTraces(array $danhaos):ResponseData;
+	
 }

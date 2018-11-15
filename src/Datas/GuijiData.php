@@ -11,7 +11,7 @@
 
 namespace Cjl\Easykuaidi\Datas;
 
-class GuijiData
+class GuijiData extends ResponseData
 {
     /**
      * 原始数据.
@@ -24,82 +24,134 @@ class GuijiData
     public $kuaidicom;
 
     /**
-     * 订单号.
+     * 运单号.
      */
-    public $orderid;
+    public $billCode;
 
     /**
-     * 交易号.
+     * 收\派件业务员姓名 或 签收客户姓名 或 代理点名称
      */
-    public $tradeid = '';
+    public $contacts;
 
     /**
-     * ContactInfo 发件人.
+     * 收\派件业务电话 或 代理点联系电话
      */
-    public $sender;
+    public $contactsTel;
 
     /**
-     * ContactInfo 收件人.
+     * 派件或收件员编号
      */
-    public $receiver;
+    public $contactsCode;
 
     /**
-     * 重量，单位：千克.
+     * 扫描类型，事件/操作，详情参见scanType编码规范
      */
-    public $weight = '';
+    public $scanType;
 
     /**
-     * 订单包裹大小（厘米）, 用半角的逗号来分隔长宽高	12,23,11.
+     * 扫描网点是否中心("T" or "F")
      */
-    public $size = '';
+    public $isCenter;
 
     /**
-     * 订单包裹内货物总数量.
+     * 扫描网点
      */
-    public $quantity = '';
+    public $scanSite;
 
     /**
-     * 订单备注.
+     * 扫描网点编号
      */
-    public $remark = '';
+    public $scanSiteCode;
 
     /**
-     * 订单包裹中商品总价值
+     * 扫描网点联系方式
      */
-    public $price = '';
+    public $scanSitePhone;
 
     /**
-     * 运输费.
+     * 扫描网点所在省份
      */
-    public $freight = '';
+    public $scanProv;
 
     /**
-     * 保险费.
+     * 扫描城市
      */
-    public $premium = '';
+    public $scanCity;
 
     /**
-     * 包装费.
+     * 扫描时间（yyyy-MM-dd HH:mm:ss）
      */
-    public $pack_charges = '';
+    public $scanDate;
 
     /**
-     * 其他费用.
+     * 值为[THIRD_PARTY_SIGN] 时，为代理点信息
      */
-    public $other_charges = '';
+    public $remark1;
 
     /**
-     * 订单总金额.
+     * 代理点地址
      */
-    public $order_sum = '';
+    public $remark2;
 
     /**
-     * 到达收取金额，一般代收货款或者到付件才需指定.
+     * 问题件二级编码
      */
-    public $collect_sum = '';
+    public $remark3;
 
     /**
-     * 订单类型：0标准；1代收；2到付.
+     * 备注信息，后期约定，未用到的可以忽略
      */
-    public $order_type = 0;
+    public $remark4;
+
+    /**
+     * 备注信息，后期约定，未用到的可以忽略
+     */
+    public $remark5;
+
+    /**
+     * 备注信息，后期约定，未用到的可以忽略
+     */
+    public $remark6;
+
+
+    /**
+     * 备注
+     */
+    public $remark;
+
+
+    /**
+     * 上一站或下一站城市
+     */
+    public $preOrNextCity;
+
+    /**
+     * 上一站或下一站省份
+     */
+    public $preOrNextProv;
+
+    /**
+     * 上一站或下一站网点
+     */
+    public $preOrNextSite;
+
+    /**
+     * 上一站或下一站网点编号
+     */
+    public $preOrNextSiteCode;
+
+    /**
+     * 上一站或下一站网点联系方式
+     */
+    public $preOrNextSitePhone;
+
+    /**
+     * 签收人
+     */
+    public $signMan;
+
+    /**
+     * 	路由详细描述
+     */
+    public $desc;
 }

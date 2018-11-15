@@ -36,11 +36,11 @@ class EasykuaidiController extends Controller
 
         $guijiData = new GuijiData();
         $guijiData->rawData = $request->data;
-
         $guijiData->kuaidicom = 'zto';
-
+        $guijiData->status = false;
         if (!empty($request->data)) {
-            $data = json_decode($request->data, true);
+            $guijiData->status = true;
+            $data = json_decode($request->data,true);
             $guijiData->billCode = $data['billCode'];
             $guijiData->contacts = $data['contacts'];
             $guijiData->contactsTel = $data['contactsTel'];

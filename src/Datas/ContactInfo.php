@@ -11,7 +11,7 @@
 
 namespace Cjl\Easykuaidi\Datas;
 
-class ContactInfo
+class ContactInfo extends ResponseData
 {
     /**
      * 联系人姓名.

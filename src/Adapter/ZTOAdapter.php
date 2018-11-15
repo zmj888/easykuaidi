@@ -11,7 +11,12 @@
 
 namespace Cjl\Easykuaidi\Adapter;
 
+use Cjl\Easykuaidi\Datas\ElecOrderData;
+use Cjl\Easykuaidi\Datas\GuijiData;
+use Cjl\Easykuaidi\Datas\HourPriceData;
 use Cjl\Easykuaidi\Datas\OrderInfo;
+use Cjl\Easykuaidi\Datas\ResponseData;
+use Cjl\Easykuaidi\Datas\TraceData;
 use Cjl\Easykuaidi\Exceptions\HttpException;
 use Cjl\Easykuaidi\Exceptions\InvalidArgumentException;
 
@@ -77,7 +82,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *                "status": true
      *                }
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv)
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv):ResponseData
     {
         if (empty($dispCity) || empty($dispProv) || empty($sendCity) || empty($sendProv)) {
             throw new InvalidArgumentException('无效的参数');
@@ -137,7 +142,13 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
                 }
             }
 
-            return $res;
+            $resData = new HourPriceData();
+            $resData->status = true;
+            $resData->message = $res['msg'];
+            $resData->addMoney = $res['data']['addMoney'];
+            $resData->firstMoney = $res['data']['firstMoney'];
+            $resData->hour = $res['data']['hour'];
+            return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -151,7 +162,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *
      * @return string json格式的
      */
-    public function getElecOrder(OrderInfo $orderInfo)
+    public function getElecOrder(OrderInfo $orderInfo):ResponseData
     {
         $jiekouname = 'partnerInsertSubmitagent';
 
@@ -214,8 +225,16 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
                     throw new InvalidArgumentException($res['msg']);
                 }
             }
-
-            return $res;
+            $resData = new ElecOrderData();
+            $resData->status = true;
+            $resData->rawData = $res;
+            $resData->message = $res['data']['message'];
+            $resData->billCode = $res['data']['billCode'];
+            $resData->orderId = $res['data']['orderId'];
+            $resData->update = $res['data']['update'];
+            $resData->siteCode = $res['data']['siteCode'];
+            $resData->siteName = $res['data']['siteName'];
+            return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -229,7 +248,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *
      * @return string json格式的
      */
-    public function subBillLog(array $danhaos, string $ssl = '')
+    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData
     {
         $jiekouname = 'subBillLog';
 
@@ -301,8 +320,11 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
                     throw new InvalidArgumentException($res['msg']);
                 }
             }
-
-            return $res;
+            $resData = new ResponseData();
+            $resData->status = true;
+            $resData->rawData = $res;
+            $resData->message = "订阅成功";
+            return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
@@ -315,7 +337,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      *
      * @return string json格式的
      */
-    public function traceInterfaceNewTraces(array $danhaos)
+    public function traceInterfaceNewTraces(array $danhaos):ResponseData
     {
         $jiekouname = 'traceInterfaceNewTraces';
 
@@ -382,8 +404,40 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
                     throw new InvalidArgumentException($res['msg']);
                 }
             }
-
-            return $res;
+            $resData = new TraceData();
+            $resData->status = true;
+            $resData->rawData = $res;
+            $resData->message = $res['msg'];
+            $resData->billCode = $res['data']['billCode'];
+            $datas = [];
+            $dArr = json_decode($res['data']['traces'],true);
+            foreach ($dArr as $item){
+                $gdata = new GuijiData();
+                $gdata->rawData = $item;
+                $gdata->desc = $item['desc'];
+                $gdata->contacts = $item['dispOrRecMan'];
+                $gdata->contactsCode = $item['dispOrRecManCode'];
+                $gdata->contactsCode = $item['dispOrRecManCode'];
+                $gdata->contactsTel = $item['dispOrRecManPhone'];
+                $gdata->isCenter = $item['isCenter'];
+                $gdata->preOrNextCity = $item['preOrNextCity'];
+                $gdata->preOrNextProv = $item['preOrNextProv'];
+                $gdata->preOrNextSite = $item['preOrNextSite'];
+                $gdata->preOrNextSiteCode = $item['preOrNextSiteCode'];
+                $gdata->preOrNextSitePhone = $item['preOrNextSitePhone'];
+                $gdata->remark = $item['remark'];
+                $gdata->scanCity = $item['scanCity'];
+                $gdata->scanDate = $item['scanDate'];
+                $gdata->scanProv = $item['scanProv'];
+                $gdata->scanSite = $item['scanSite'];
+                $gdata->scanSiteCode = $item['scanSiteCode'];
+                $gdata->scanSitePhone = $item['scanSitePhone'];
+                $gdata->scanType = $item['scanType'];
+                $gdata->signMan = $item['signMan'];
+                $datas[] = $gdata;
+            }
+            $resData->traceDatas = $datas;
+            return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }

@@ -11,8 +11,8 @@
 
 namespace Cjl\Easykuaidi\Tests;
 
-use Cjl\Easykuaidi\OrderInfo;
-use Cjl\Easykuaidi\ContactInfo;
+use Cjl\Easykuaidi\Datas\OrderInfo;
+use Cjl\Easykuaidi\Datas\ContactInfo;
 use Cjl\Easykuaidi\Adapter\ZTOAdapter;
 use Cjl\Easykuaidi\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
