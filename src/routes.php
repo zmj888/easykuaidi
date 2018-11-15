@@ -9,8 +9,6 @@
  * with this source code in the file LICENSE.
  */
 
-
-
 Route::any('/easykuaidi/ztosubscribe', 'Cjl\Easykuaidi\Controller\EasykuaidiController@ztoSubscribe')
     ->name('easykuaidi.ztosubscribe');
 
