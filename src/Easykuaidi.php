@@ -11,10 +11,14 @@
 
 namespace Cjl\Easykuaidi;
 
+use Cjl\Easykuaidi\Adapter\SFAdapter;
+use Cjl\Easykuaidi\Adapter\STOAdapter;
+use Cjl\Easykuaidi\Adapter\YTOAdapter;
 use Cjl\Easykuaidi\Adapter\ZTOAdapter;
 use Cjl\Easykuaidi\Adapter\Kuaidi100;
 use Cjl\Easykuaidi\Datas\OrderInfo;
 use Cjl\Easykuaidi\Datas\ResponseData;
+use Cjl\Easykuaidi\Exceptions\Exception;
 
 class Easykuaidi implements EasykuaidiAdapterInterface
 {
@@ -39,6 +43,14 @@ class Easykuaidi implements EasykuaidiAdapterInterface
             $config['testmode'], $config['zto']['partner_id'], $config['zto']['create_by'], url('/easykuaidi/ztosubscribe'));
         } elseif ('kuaidi100' == $config['default']) {
             $this->adapter = new Kuaidi100($config['kuaidi100']['key']);
+        } elseif ('sto' == $config['default']) {
+            $this->adapter = new STOAdapter($config['sto']['key'],$config['sto']['secret']);
+        } elseif ('yto' == $config['default']) {
+            $this->adapter = new YTOAdapter($config['sto']['key'],$config['sto']['secret']);
+        } elseif ('sf' == $config['default']) {
+            $this->adapter = new SFAdapter($config['sto']['key'],$config['sto']['secret']);
+        }else{
+            throw new Exception("不支持".$config['default']."的快递公司接口");
         }
     }
 
@@ -59,12 +71,14 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      * @param string $dispProv 收件省份名称，如 江苏
      * @param string $sendCity 寄件城市名称，如 杭州市
      * @param string $sendProv 寄件省份名称，如 浙江
+     * @param string $dispCountry 收件地区县名称
+     * @param string $sendCountry 发件地区县名称
      *
      * @return string json格式的
      */
-    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv): ResponseData
+    public function getHourPrice(string $dispCity, string $dispProv, string $sendCity, string $sendProv, string $dispCountry='', string $sendCountry=''):ResponseData
     {
-        return $this->adapter->getHourPrice($dispCity, $dispProv, $sendCity, $sendProv);
+        return $this->adapter->getHourPrice($dispCity, $dispProv, $sendCity, $sendProv, $dispCountry, $sendCountry);
     }
 
     /**
@@ -74,7 +88,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function getElecOrder(OrderInfo $orderInfo): ResponseData
+    public function getElecOrder(OrderInfo $orderInfo):ResponseData
     {
         return $this->adapter->getElecOrder($orderInfo);
     }
@@ -87,19 +101,19 @@ class Easykuaidi implements EasykuaidiAdapterInterface
      *
      * @return string json格式的
      */
-    public function subBillLog(array $danhaos, string $ssl = ''): ResponseData
+    public function subBillLog(array $danhaos, string $ssl = ''):ResponseData
     {
         return $this->adapter->subBillLog($danhaos, $ssl);
     }
-
+	
     /**
      * 获取快件轨迹信息.
      *
-     * @param array $danhaos 商家要查询的的订单号数组
+     * @param array  $danhaos 商家要查询的的订单号数组
      *
      * @return string json格式的
      */
-    public function traceInterfaceNewTraces(array $danhaos): ResponseData
+    public function traceInterfaceNewTraces(array $danhaos):ResponseData
     {
         return $this->adapter->traceInterfaceNewTraces($danhaos);
     }

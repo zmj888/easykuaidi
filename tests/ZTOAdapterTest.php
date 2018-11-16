@@ -27,12 +27,11 @@ class ZTOAdapterTest extends TestCase
     //     $this->expectException(InvalidArgumentException::class);
     // }
 
-    public function testGetHourPrice()
-    {
-        $adapter = new ZTOAdapter('asd', 'asd', true, 'test', 'test');
-
-        $this->assertSame(['data' => ['addMoney' => '2', 'firstMoney' => '10', 'hour' => '0'], 'msg' => '获取报价成功', 'status' => true], $adapter->getHourPrice('无锡市', '江苏', '杭州市', '浙江'));
-    }
+    //public function testGetHourPrice()
+    //{
+    //    $adapter = new ZTOAdapter('asd', 'asd', true, 'test', 'test');
+    //    $this->assertSame(['data' => ['addMoney' => '2', 'firstMoney' => '10', 'hour' => '0'], 'msg' => '获取报价成功', 'status' => true], $adapter->getHourPrice('无锡市', '江苏', '杭州市', '浙江'));
+    //}
 
     // public function testGetElecOrder()
     // {
@@ -63,11 +62,11 @@ class ZTOAdapterTest extends TestCase
     //         $adapter->getElecOrder($orderInfo));
     // }
 
-    public function testSubBillLog()
-    {
-        $adapter = new ZTOAdapter('asd', 'asd', true, 'test', 'test', 'http://requestbin.leo108.com/12geg3l1');
-        $this->assertSame([['id' => '1111111111', 'mailNo' => '', 'remark' => '订阅成功', 'status' => true]], $adapter->subBillLog(['680000000020'], 'test'));
-    }
+    //public function testSubBillLog()
+    //{
+    //    $adapter = new ZTOAdapter('asd', 'asd', true, 'test', 'test', 'http://requestbin.leo108.com/12geg3l1');
+    //    $this->assertSame([['id' => '1111111111', 'mailNo' => '', 'remark' => '订阅成功', 'status' => true]], $adapter->subBillLog(['680000000020'], 'test'));
+    //}
 
     public function testGetHttpClient()
     {

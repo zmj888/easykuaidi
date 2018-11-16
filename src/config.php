@@ -11,7 +11,7 @@
 
 return [
     /*
-    * 指定使用哪种接口，zto：中通，kuaidi100：快递100
+    * 指定使用哪种接口，zto：中通，kuaidi100：快递100，sto：申通，yto：圆通，sf：顺丰
     */
     'default' => 'zto',
 
