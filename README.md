@@ -57,7 +57,7 @@ Cjl\Easykuaidi\Events\EasykuaidiEvent
 
 - 电子面单
 ```
-	$sender = new \Cjl\Easykuaidi\ContactInfo();
+	$sender = new \Cjl\Easykuaidi\Data\ContactInfo();
     
     $sender->name = "站三";
     
@@ -71,7 +71,7 @@ Cjl\Easykuaidi\Events\EasykuaidiEvent
     
     $sender->address = "冠华路900号";
     
-    $receiver = new \Cjl\Easykuaidi\ContactInfo();
+    $receiver = new \Cjl\Easykuaidi\Data\ContactInfo();
     
     $receiver->name = "lisi";
     
@@ -85,7 +85,7 @@ Cjl\Easykuaidi\Events\EasykuaidiEvent
     
     $receiver->address = "中华路100号";
     
-    $orderInfo = new \Cjl\Easykuaidi\OrderInfo();
+    $orderInfo = new \Cjl\Easykuaidi\Data\OrderInfo();
     
     $orderInfo->sender = $sender;
     
