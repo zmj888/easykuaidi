@@ -57,14 +57,14 @@ interface EasykuaidiAdapterInterface
      * @return ResponseData
      */
     public function traceInterfaceNewTraces(array $danhaos): ResponseData;
-	
+
     /**
      * 打印接口.
      *
      * @param OrderInfo $orderInfo 订单信息
-     * @param string $deviceId 打印设备的id
+     * @param string    $deviceId  打印设备的id
      *
      * @return ResponseData
      */
-    public function doPrint(OrderInfo $orderInfo,string $deviceId): ResponseData;
+    public function doPrint(OrderInfo $orderInfo, string $deviceId): ResponseData;
 }

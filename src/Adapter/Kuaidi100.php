@@ -100,8 +100,8 @@ class Kuaidi100 extends AbstractEasykuaidiAdapter
     {
         throw new Exception('此接口尚未实现');
     }
-	
-    public function doPrint(OrderInfo $orderInfo,string $deviceId): ResponseData
+
+    public function doPrint(OrderInfo $orderInfo, string $deviceId): ResponseData
     {
         throw new Exception('此接口尚未实现');
     }
