@@ -27,4 +27,9 @@ class ResponseData
      * 快递接口返回的原始数据.
      */
     public $rawData;
+	
+    /**
+     * 返回的错误码.
+     */
+    public $code;
 }

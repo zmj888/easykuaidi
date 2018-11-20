@@ -19,6 +19,7 @@ use Cjl\Easykuaidi\Datas\ResponseData;
 use Cjl\Easykuaidi\Datas\TraceData;
 use Cjl\Easykuaidi\Exceptions\HttpException;
 use Cjl\Easykuaidi\Exceptions\InvalidArgumentException;
+use Cjl\Easykuaidi\Datas\PrintResData;
 
 /**
  * 中通.
@@ -444,6 +445,79 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             }
             $resData->traceDatas = $datas;
 
+            return $resData;
+        } catch (\Exception $e) {
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+	
+	public function doPrint(OrderInfo $orderInfo,string $deviceId): ResponseData
+    {
+        $jiekouname = 'doPrint';
+
+        if ($this->testmode) {
+            $url = $this->host_test.$jiekouname;
+            $comid = 'ea8c719489de4ad0bf475477bad43dc6';
+            $comkey = 'submitordertest==';
+        } else {
+            $comid = $this->company_id;
+            $comkey = $this->key;
+            $url = $this->host.$jiekouname;
+        }
+        $senderInfo = $orderInfo->sender;
+        $receiverInfo = $orderInfo->receiver;
+
+        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone,'prov'=> $senderInfo->province, 'city' => $senderInfo->city, 'country' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
+        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone,'prov'=> $receiverInfo->province, 'city' => $receiverInfo->city, 'country' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
+        $printParam = array('paramType' => 'DEFAULT_PRINT');
+        $data = array('partnerCode' => $orderInfo->orderid, 'printChannel' => 'ZOP', 'printerId' => $deviceId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
+            'printParam' => $printParam);
+        $params = array('request' => $data);
+        $fixedParams = array();
+        foreach ($params as $k => $v) {
+            if ('string' != gettype($v)) {
+                $fixedParams += [$k => json_encode($v)];
+            } else {
+                $fixedParams += [$k => $v];
+            }
+        }
+        $str_to_digest = '';
+        foreach ($fixedParams as $k => $v) {
+            $str_to_digest = $str_to_digest.$k.'='.$v.'&';
+        }
+        $str_to_digest = substr($str_to_digest, 0, -1).$comkey;
+        $data_digest = base64_encode(md5($str_to_digest, true));
+
+        try {
+            $response = $this->getHttpClient()->post($url, [
+                'form_params' => $fixedParams,
+                'headers' => [
+                    'ContentType' => 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'x-companyId' => $comid,
+                    'x-dataDigest' => $data_digest,
+                ],
+            ])->getBody()->getContents();
+            $res = \json_decode($response, true);
+            if (isset($res['status']) && !$res['status']) {
+                if (isset($res['message'])) {
+                    throw new InvalidArgumentException($res['message']);
+                } else {
+                    throw new InvalidArgumentException($res['msg']);
+                }
+            }
+            if (isset($res['result']) && !$res['result']) {
+                if (isset($res['message'])) {
+                    throw new InvalidArgumentException($res['message']);
+                } else {
+                    throw new InvalidArgumentException($res['msg']);
+                }
+            }
+            $resData = new PrintResData();
+            $resData->status = true;
+            $resData->rawData = $res;
+            $resData->message = $res['message'];
+            $resData->billCode = $res['result']['printType'];
+            $resData->orderId = $res['result']['partnerCode'];
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
