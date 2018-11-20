@@ -450,8 +450,8 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
-	
-	public function doPrint(OrderInfo $orderInfo,string $deviceId): ResponseData
+
+    public function doPrint(OrderInfo $orderInfo, string $deviceId): ResponseData
     {
         $jiekouname = 'doPrint';
 
@@ -467,11 +467,11 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         $senderInfo = $orderInfo->sender;
         $receiverInfo = $orderInfo->receiver;
 
-        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone,'prov'=> $senderInfo->province, 'city' => $senderInfo->city, 'country' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
-        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone,'prov'=> $receiverInfo->province, 'city' => $receiverInfo->city, 'country' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
+        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone, 'prov' => $senderInfo->province, 'city' => $senderInfo->city, 'country' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
+        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone, 'prov' => $receiverInfo->province, 'city' => $receiverInfo->city, 'country' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
         $printParam = array('paramType' => 'DEFAULT_PRINT');
         $data = array('partnerCode' => $orderInfo->orderid, 'printChannel' => 'ZOP', 'printerId' => $deviceId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
-            'printParam' => $printParam);
+            'printParam' => $printParam, );
         $params = array('request' => $data);
         $fixedParams = array();
         foreach ($params as $k => $v) {
@@ -518,6 +518,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->message = $res['message'];
             $resData->billCode = $res['result']['printType'];
             $resData->orderId = $res['result']['partnerCode'];
+
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
