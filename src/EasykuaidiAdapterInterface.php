@@ -66,5 +66,5 @@ interface EasykuaidiAdapterInterface
      *
      * @return ResponseData
      */
-    public function doPrint(OrderInfo $orderInfo, string $deviceId): ResponseData;
+    public function doPrint(OrderInfo $orderInfo, string $deviceId, $qrcodeId = ''): ResponseData;
 }

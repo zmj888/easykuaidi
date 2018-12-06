@@ -118,7 +118,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
         return $this->adapter->traceInterfaceNewTraces($danhaos);
     }
 
-    public function doPrint(OrderInfo $orderInfo, string $deviceId): ResponseData
+    public function doPrint(OrderInfo $orderInfo, string $deviceId, $qrcodeId = ''): ResponseData
     {
         return $this->adapter->doPrint($orderInfo, $deviceId);
     }
