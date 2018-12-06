@@ -470,7 +470,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone, 'prov' => $senderInfo->province, 'city' => $senderInfo->city, 'county' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
         $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone, 'prov' => $receiverInfo->province, 'city' => $receiverInfo->city, 'county' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
         $printParam = array('paramType' => 'DEFAULT_PRINT');
-        $data = array('partnerCode' => $orderInfo->orderid, 'printChannel' => 'ZOP', 'printerId' => $deviceId, 'qrcodeId'=>$qrcodeId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
+        $data = array('partnerCode' => $orderInfo->orderid, 'printChannel' => 'ZOP', 'printerId' => $deviceId, 'qrcodeId' => $qrcodeId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
             'printParam' => $printParam, );
         $params = array('request' => $data);
         $fixedParams = array();
