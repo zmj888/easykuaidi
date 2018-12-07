@@ -70,7 +70,7 @@ class ZTOAdapterTest extends TestCase
 
     public function testGetHttpClient()
     {
-		$config = array('company_id'=>'asd','key'=>'asd','elecPwd'=>'','partner_id'=>'','create_by'=>'');
+        $config = array('company_id' => 'asd', 'key' => 'asd', 'elecPwd' => '', 'partner_id' => '', 'create_by' => '');
         $w = new ZTOAdapter($config, true);
 
         // 断言返回结果为 GuzzleHttp\ClientInterface 实例
@@ -79,7 +79,7 @@ class ZTOAdapterTest extends TestCase
 
     public function testSetGuzzleOptions()
     {
-		$config = array('company_id'=>'asd','key'=>'asd','elecPwd'=>'','partner_id'=>'','create_by'=>'');
+        $config = array('company_id' => 'asd', 'key' => 'asd', 'elecPwd' => '', 'partner_id' => '', 'create_by' => '');
         $w = new ZTOAdapter($config, true);
 
         // 设置参数前，timeout 为 null
