@@ -70,7 +70,8 @@ class ZTOAdapterTest extends TestCase
 
     public function testGetHttpClient()
     {
-        $w = new ZTOAdapter('asd', 'asd', true);
+		$config = array('company_id'=>'asd','key'=>'asd');
+        $w = new ZTOAdapter($config, true);
 
         // 断言返回结果为 GuzzleHttp\ClientInterface 实例
         $this->assertInstanceOf(ClientInterface::class, $w->getHttpClient());
@@ -78,7 +79,8 @@ class ZTOAdapterTest extends TestCase
 
     public function testSetGuzzleOptions()
     {
-        $w = new ZTOAdapter('asd', 'asd', true);
+		$config = array('company_id'=>'asd','key'=>'asd');
+        $w = new ZTOAdapter($config, true);
 
         // 设置参数前，timeout 为 null
         $this->assertNull($w->getHttpClient()->getConfig('timeout'));
