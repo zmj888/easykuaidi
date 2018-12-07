@@ -58,11 +58,11 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
      * @param string $company_id 合作商编码
      * @param string $key        合作商签名key
      */
-    public function __construct($config, bool $testmode = false,$pushTarget='')
+    public function __construct($config, bool $testmode = false, $pushTarget = '')
     {
         $this->company_id = $config['company_id'];
         $this->config = $config;
-        $this->elecPwd  = $config['elecPwd'];
+        $this->elecPwd = $config['elecPwd'];
         $this->key = $config['key'];
         $this->pushTarget = $pushTarget;
         $this->partner = $config['partner_id'];
@@ -457,7 +457,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         }
     }
 
-    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData
+    public function doPrint(OrderInfo $orderInfo, DeviceInfo $deviceInfo): ResponseData
     {
         //string $deviceId,string $qrcodeid=''
         $jiekouname = 'doPrint';
@@ -474,20 +474,19 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         $senderInfo = $orderInfo->sender;
         $receiverInfo = $orderInfo->receiver;
 
-        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone,'prov'=> $senderInfo->province, 'city' => $senderInfo->city, 'county' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
-        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone,'prov'=> $receiverInfo->province, 'city' => $receiverInfo->city, 'county' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
+        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone, 'prov' => $senderInfo->province, 'city' => $senderInfo->city, 'county' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
+        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone, 'prov' => $receiverInfo->province, 'city' => $receiverInfo->city, 'county' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
 
-        if($orderInfo->eorder_printed){
-            $printParam = array('paramType' => 'ELEC_MARK', 'mailNo' => $orderInfo->tradeid, 'elecAccount' =>  $this->partner, 'elecPwd' => $this->elecPwd, 'printMark' => $orderInfo->printMark, 'printBagaddr' =>  $orderInfo->printBagaddr);
-        }else{
+        if ($orderInfo->eorder_printed) {
+            $printParam = array('paramType' => 'ELEC_MARK', 'mailNo' => $orderInfo->tradeid, 'elecAccount' => $this->partner, 'elecPwd' => $this->elecPwd, 'printMark' => $orderInfo->printMark, 'printBagaddr' => $orderInfo->printBagaddr);
+        } else {
             $printParam = array('paramType' => 'DEFAULT_PRINT');
         }
-
 
         //REMOTE_EPRINT
         //QRCODE_EPRINT
         $data = array('partnerCode' => $orderInfo->orderid, 'repetition' => $orderInfo->eorder_printed, 'printChannel' => 'ZOP', 'printerId' => $deviceInfo->deviceId, 'qrcodeId' => $deviceInfo->qrcodeId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
-            'printParam' => $printParam);
+            'printParam' => $printParam, );
         $params = array('request' => $data);
 
         $fixedParams = array();
@@ -535,16 +534,18 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->message = $res['message'];
             $resData->billCode = $res['result']['printType'];
             $resData->orderId = $res['result']['partnerCode'];
+
             return $resData;
         } catch (\Exception $e) {
-            if(isset($res) && !empty($res)){
+            if (isset($res) && !empty($res)) {
                 $resData = new PrintResData();
                 $resData->status = false;
                 $resData->code = $res['statusCode'];
                 $resData->rawData = $res;
                 $resData->message = $res['message'];
+
                 return $resData;
-            }else{
+            } else {
                 throw new HttpException($e->getMessage(), $e->getCode(), $e);
             }
         }
@@ -567,7 +568,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         $receiverInfo = $orderInfo->receiver;
 
         $data = array('unionCode' => $orderInfo->tradeid, 'send_province' => $senderInfo->province, 'send_city' => $senderInfo->city, 'send_district' => $senderInfo->country, 'send_address' => $senderInfo->address,
-            'receive_province' => $receiverInfo->province, 'receive_city' => $receiverInfo->city, 'receive_district' => $receiverInfo->country, 'receive_address' => $receiverInfo->address);
+            'receive_province' => $receiverInfo->province, 'receive_city' => $receiverInfo->city, 'receive_district' => $receiverInfo->country, 'receive_address' => $receiverInfo->address, );
         $params = array('company_id' => $comid, 'msg_type' => 'GETMARK', 'data' => $data);
         $fixedParams = array();
         foreach ($params as $k => $v) {
@@ -614,6 +615,7 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->message = $res['message'];
             $resData->mark = $res['result']['mark'];
             $resData->bagAddr = $res['result']['bagAddr'];
+
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
