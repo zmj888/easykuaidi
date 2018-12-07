@@ -40,7 +40,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
     {
         $this->config = $config;
         if ('zto' == $config['default']) {
-            $this->adapter = new ZTOAdapter($config['zto'], $config['testmode']);
+            $this->adapter = new ZTOAdapter($config['zto'] , $config['testmode'],url('/easykuaidi/ztosubscribe'));
         } elseif ('kuaidi100' == $config['default']) {
             $this->adapter = new Kuaidi100($config['kuaidi100']['key']);
         } elseif ('sto' == $config['default']) {
@@ -118,9 +118,9 @@ class Easykuaidi implements EasykuaidiAdapterInterface
         return $this->adapter->traceInterfaceNewTraces($danhaos);
     }
 
-    public function doPrint(OrderInfo $orderInfo, DeviceInfo $deviceInfo): ResponseData
+    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData
     {
-        return $this->adapter->doPrint($orderInfo, $deviceInfo);
+        return $this->adapter->doPrint($orderInfo,$deviceInfo);
     }
 
     public function bagAddrMarkGetmark(OrderInfo $orderInfo): ResponseData
