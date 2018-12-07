@@ -11,15 +11,17 @@
 
 namespace Cjl\Easykuaidi\Adapter;
 
+use Cjl\Easykuaidi\Datas\DeviceInfo;
 use Cjl\Easykuaidi\Datas\ElecOrderData;
 use Cjl\Easykuaidi\Datas\GuijiData;
 use Cjl\Easykuaidi\Datas\HourPriceData;
 use Cjl\Easykuaidi\Datas\OrderInfo;
+use Cjl\Easykuaidi\Datas\PrintMarkerResData;
+use Cjl\Easykuaidi\Datas\PrintResData;
 use Cjl\Easykuaidi\Datas\ResponseData;
 use Cjl\Easykuaidi\Datas\TraceData;
 use Cjl\Easykuaidi\Exceptions\HttpException;
 use Cjl\Easykuaidi\Exceptions\InvalidArgumentException;
-use Cjl\Easykuaidi\Datas\PrintResData;
 
 /**
  * 中通.
@@ -50,19 +52,23 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
 
     private $host = 'http://japi.zto.cn/';
 
+    private $elecPwd = '';
+
     /**
      * @param string $company_id 合作商编码
      * @param string $key        合作商签名key
      */
-    public function __construct(string $company_id, string $key, bool $testmode = false, string $partner = '', string $createBy = '', string $pushTarget = '')
+    public function __construct($config, bool $testmode = false)
     {
-        $this->company_id = $company_id;
-        $this->key = $key;
-        $this->pushTarget = $pushTarget;
-        $this->partner = $partner;
-        $this->createBy = $createBy;
+        $this->company_id = $config['company_id'];
+        $this->config = $config;
+        $this->elecPwd  = $config['elecPwd'];
+        $this->key = $config['key'];
+        $this->pushTarget = url('/easykuaidi/ztosubscribe');
+        $this->partner = $config['partner_id'];
+        $this->createBy = $config['create_by'];
         $this->testmode = $testmode;
-        if (!$testmode && (empty($company_id) || empty($key))) {
+        if (!$testmode && (empty($this->company_id) || empty($this->key))) {
             throw new InvalidArgumentException('合作商编码或者签名key不能为空');
         }
     }
@@ -451,8 +457,9 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         }
     }
 
-    public function doPrint(OrderInfo $orderInfo, string $deviceId, $qrcodeId = ''): ResponseData
+    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData
     {
+        //string $deviceId,string $qrcodeid=''
         $jiekouname = 'doPrint';
 
         if ($this->testmode) {
@@ -467,12 +474,22 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
         $senderInfo = $orderInfo->sender;
         $receiverInfo = $orderInfo->receiver;
 
-        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone, 'prov' => $senderInfo->province, 'city' => $senderInfo->city, 'county' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
-        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone, 'prov' => $receiverInfo->province, 'city' => $receiverInfo->city, 'county' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
-        $printParam = array('paramType' => 'DEFAULT_PRINT');
-        $data = array('partnerCode' => $orderInfo->orderid, 'printChannel' => 'ZOP', 'printerId' => $deviceId, 'qrcodeId'=>$qrcodeId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
-            'printParam' => $printParam, );
+        $sender = array('name' => $senderInfo->name, 'company' => $senderInfo->company, 'mobile' => $senderInfo->mobile, 'phone' => $senderInfo->phone,'prov'=> $senderInfo->province, 'city' => $senderInfo->city, 'county' => $senderInfo->country, 'address' => $senderInfo->address, 'zipcode' => $senderInfo->zipcode);
+        $receiver = array('name' => $receiverInfo->name, 'company' => $receiverInfo->company, 'mobile' => $receiverInfo->mobile, 'phone' => $receiverInfo->phone,'prov'=> $receiverInfo->province, 'city' => $receiverInfo->city, 'county' => $receiverInfo->country, 'address' => $receiverInfo->address, 'zipcode' => $receiverInfo->zipcode);
+
+        if($orderInfo->eorder_printed){
+            $printParam = array('paramType' => 'ELEC_MARK', 'mailNo' => $orderInfo->tradeid, 'elecAccount' =>  $this->partner, 'elecPwd' => $this->elecPwd, 'printMark' => $orderInfo->printMark, 'printBagaddr' =>  $orderInfo->printBagaddr);
+        }else{
+            $printParam = array('paramType' => 'DEFAULT_PRINT');
+        }
+
+
+        //REMOTE_EPRINT
+        //QRCODE_EPRINT
+        $data = array('partnerCode' => $orderInfo->orderid, 'repetition' => $orderInfo->eorder_printed, 'printChannel' => 'ZOP', 'printerId' => $deviceInfo->deviceId, 'qrcodeId' => $deviceInfo->qrcodeId, 'printType' => 'REMOTE_EPRINT', 'sender' => $sender, 'receiver' => $receiver,
+            'printParam' => $printParam);
         $params = array('request' => $data);
+
         $fixedParams = array();
         foreach ($params as $k => $v) {
             if ('string' != gettype($v)) {
@@ -518,7 +535,85 @@ class ZTOAdapter extends AbstractEasykuaidiAdapter
             $resData->message = $res['message'];
             $resData->billCode = $res['result']['printType'];
             $resData->orderId = $res['result']['partnerCode'];
+            return $resData;
+        } catch (\Exception $e) {
+            if(isset($res) && !empty($res)){
+                $resData = new PrintResData();
+                $resData->status = false;
+                $resData->code = $res['statusCode'];
+                $resData->rawData = $res;
+                $resData->message = $res['message'];
+                return $resData;
+            }else{
+                throw new HttpException($e->getMessage(), $e->getCode(), $e);
+            }
+        }
+    }
 
+    public function bagAddrMarkGetmark(OrderInfo $orderInfo): ResponseData
+    {
+        $jiekouname = 'bagAddrMarkGetmark';
+
+        if ($this->testmode) {
+            $url = $this->host_test.$jiekouname;
+            $comid = 'kfpttestCode';
+            $comkey = 'kfpttestkey==';
+        } else {
+            $comid = $this->company_id;
+            $comkey = $this->key;
+            $url = $this->host.$jiekouname;
+        }
+        $senderInfo = $orderInfo->sender;
+        $receiverInfo = $orderInfo->receiver;
+
+        $data = array('unionCode' => $orderInfo->tradeid, 'send_province' => $senderInfo->province, 'send_city' => $senderInfo->city, 'send_district' => $senderInfo->country, 'send_address' => $senderInfo->address,
+            'receive_province' => $receiverInfo->province, 'receive_city' => $receiverInfo->city, 'receive_district' => $receiverInfo->country, 'receive_address' => $receiverInfo->address);
+        $params = array('company_id' => $comid, 'msg_type' => 'GETMARK', 'data' => $data);
+        $fixedParams = array();
+        foreach ($params as $k => $v) {
+            if ('string' != gettype($v)) {
+                $fixedParams += [$k => json_encode($v)];
+            } else {
+                $fixedParams += [$k => $v];
+            }
+        }
+        $str_to_digest = '';
+        foreach ($fixedParams as $k => $v) {
+            $str_to_digest = $str_to_digest.$k.'='.$v.'&';
+        }
+        $str_to_digest = substr($str_to_digest, 0, -1).$comkey;
+        $data_digest = base64_encode(md5($str_to_digest, true));
+
+        try {
+            $response = $this->getHttpClient()->post($url, [
+                'form_params' => $fixedParams,
+                'headers' => [
+                    'ContentType' => 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'x-companyId' => $comid,
+                    'x-dataDigest' => $data_digest,
+                ],
+            ])->getBody()->getContents();
+            $res = \json_decode($response, true);
+            if (isset($res['status']) && !$res['status']) {
+                if (isset($res['message'])) {
+                    throw new InvalidArgumentException($res['message']);
+                } else {
+                    throw new InvalidArgumentException($res['msg']);
+                }
+            }
+            if (isset($res['result']) && !$res['result']) {
+                if (isset($res['message'])) {
+                    throw new InvalidArgumentException($res['message']);
+                } else {
+                    throw new InvalidArgumentException($res['msg']);
+                }
+            }
+            $resData = new PrintMarkerResData();
+            $resData->status = true;
+            $resData->rawData = $res;
+            $resData->message = $res['message'];
+            $resData->mark = $res['result']['mark'];
+            $resData->bagAddr = $res['result']['bagAddr'];
             return $resData;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);

@@ -11,6 +11,7 @@
 
 namespace Cjl\Easykuaidi\Adapter;
 
+use Cjl\Easykuaidi\Datas\DeviceInfo;
 use Cjl\Easykuaidi\Datas\ResponseData;
 use Cjl\Easykuaidi\Exceptions\Exception;
 use Cjl\Easykuaidi\Datas\OrderInfo;
@@ -60,7 +61,12 @@ class SFAdapter extends AbstractEasykuaidiAdapter
         throw new Exception('此接口尚未实现');
     }
 
-    public function doPrint(OrderInfo $orderInfo, string $deviceId, $qrcodeId = ''): ResponseData
+    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData
+    {
+        throw new Exception('此接口尚未实现');
+    }
+
+    public function bagAddrMarkGetmark(OrderInfo $orderInfo): ResponseData
     {
         throw new Exception('此接口尚未实现');
     }

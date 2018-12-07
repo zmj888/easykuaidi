@@ -11,6 +11,7 @@
 
 namespace Cjl\Easykuaidi;
 
+use Cjl\Easykuaidi\Datas\DeviceInfo;
 use Cjl\Easykuaidi\Datas\OrderInfo;
 use Cjl\Easykuaidi\Datas\ResponseData;
 
@@ -62,9 +63,19 @@ interface EasykuaidiAdapterInterface
      * 打印接口.
      *
      * @param OrderInfo $orderInfo 订单信息
-     * @param string    $deviceId  打印设备的id
+     * @param DeviceInfo $deviceInfo 打印设备的信息
      *
      * @return ResponseData
      */
-    public function doPrint(OrderInfo $orderInfo, string $deviceId, $qrcodeId = ''): ResponseData;
+    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData;
+
+    /**
+     * 集包地大头笔获取
+     *
+     * @param OrderInfo $orderInfo 订单信息
+     *
+     * @return ResponseData
+     */
+    public function bagAddrMarkGetmark(OrderInfo $orderInfo): ResponseData;
+
 }

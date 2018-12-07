@@ -92,4 +92,20 @@ class OrderInfo extends ResponseData
      * 订单类型：0标准；1代收；2到付.
      */
     public $order_type = 0;
+	
+    /**
+     * 订单是否打印过.
+     */
+    public $eorder_printed = false;
+	
+	/**
+     * 大头笔.
+     */
+    public $printMark = '';
+
+
+    /**
+     * 集包地.
+     */
+    public $printBagaddr = '';
 }

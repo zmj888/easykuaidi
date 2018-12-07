@@ -32,6 +32,11 @@ abstract class AbstractEasykuaidiAdapter implements EasykuaidiAdapterInterface
     protected $pushTarget;
 
     /**
+     * 相关配置信息
+     */
+    protected $config;
+
+    /**
      * 获取GuzzleHttp的Client对象
      *
      * @return Client

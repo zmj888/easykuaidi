@@ -16,6 +16,7 @@ use Cjl\Easykuaidi\Adapter\STOAdapter;
 use Cjl\Easykuaidi\Adapter\YTOAdapter;
 use Cjl\Easykuaidi\Adapter\ZTOAdapter;
 use Cjl\Easykuaidi\Adapter\Kuaidi100;
+use Cjl\Easykuaidi\Datas\DeviceInfo;
 use Cjl\Easykuaidi\Datas\OrderInfo;
 use Cjl\Easykuaidi\Datas\ResponseData;
 use Cjl\Easykuaidi\Exceptions\Exception;
@@ -39,8 +40,7 @@ class Easykuaidi implements EasykuaidiAdapterInterface
     {
         $this->config = $config;
         if ('zto' == $config['default']) {
-            $this->adapter = new ZTOAdapter($config['zto']['company_id'],$config['zto']['key'],
-            $config['testmode'], $config['zto']['partner_id'], $config['zto']['create_by'], url('/easykuaidi/ztosubscribe'));
+            $this->adapter = new ZTOAdapter($config['zto'] , $config['testmode']);
         } elseif ('kuaidi100' == $config['default']) {
             $this->adapter = new Kuaidi100($config['kuaidi100']['key']);
         } elseif ('sto' == $config['default']) {
@@ -118,8 +118,13 @@ class Easykuaidi implements EasykuaidiAdapterInterface
         return $this->adapter->traceInterfaceNewTraces($danhaos);
     }
 
-    public function doPrint(OrderInfo $orderInfo, string $deviceId, $qrcodeId = ''): ResponseData
+    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData
     {
-        return $this->adapter->doPrint($orderInfo, $deviceId);
+        return $this->adapter->doPrint($orderInfo,$deviceInfo);
+    }
+
+    public function bagAddrMarkGetmark(OrderInfo $orderInfo): ResponseData
+    {
+        return $this->adapter->bagAddrMarkGetmark($orderInfo);
     }
 }
