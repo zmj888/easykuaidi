@@ -32,7 +32,7 @@ abstract class AbstractEasykuaidiAdapter implements EasykuaidiAdapterInterface
     protected $pushTarget;
 
     /**
-     * 相关配置信息
+     * 相关配置信息.
      */
     protected $config;
 

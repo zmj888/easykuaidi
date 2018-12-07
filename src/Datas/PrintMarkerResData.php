@@ -12,8 +12,7 @@
 namespace Cjl\Easykuaidi\Datas;
 
 /**
- * 	大头笔集包地信息
- *
+ * 	大头笔集包地信息.
  */
 class PrintMarkerResData extends ResponseData
 {

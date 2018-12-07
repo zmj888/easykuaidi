@@ -62,20 +62,19 @@ interface EasykuaidiAdapterInterface
     /**
      * 打印接口.
      *
-     * @param OrderInfo $orderInfo 订单信息
+     * @param OrderInfo  $orderInfo  订单信息
      * @param DeviceInfo $deviceInfo 打印设备的信息
      *
      * @return ResponseData
      */
-    public function doPrint(OrderInfo $orderInfo,DeviceInfo $deviceInfo): ResponseData;
+    public function doPrint(OrderInfo $orderInfo, DeviceInfo $deviceInfo): ResponseData;
 
     /**
-     * 集包地大头笔获取
+     * 集包地大头笔获取.
      *
      * @param OrderInfo $orderInfo 订单信息
      *
      * @return ResponseData
      */
     public function bagAddrMarkGetmark(OrderInfo $orderInfo): ResponseData;
-
 }

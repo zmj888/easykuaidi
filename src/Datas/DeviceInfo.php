@@ -17,12 +17,12 @@ namespace Cjl\Easykuaidi\Datas;
 class DeviceInfo
 {
     /**
-     * 打印机名称 id之类的，中通的打印必须传
+     * 打印机名称 id之类的，中通的打印必须传.
      */
     public $deviceId;
 
     /**
-     * 打印机二维码id，中通的打印必须传
+     * 打印机二维码id，中通的打印必须传.
      */
     public $qrcodeId;
 }
